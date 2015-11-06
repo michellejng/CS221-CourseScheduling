@@ -285,7 +285,7 @@ class BacktrackingSearch():
             return varConstraintList[0][0]
             # END_YOUR_CODE
 
-    def arc_consistency_check(self, var):
+    def arc_consistency_check(self, var1):
         """
         Perform the AC-3 algorithm. The goal is to reduce the size of the
         domain values for the unassigned variables based on arc consistency.
@@ -306,7 +306,24 @@ class BacktrackingSearch():
         #   (self.csp.binaryFactors[var1][var2] returns a nested dict of all assignments)
 
         # BEGIN_YOUR_CODE (around 20 lines of code expected)
-        raise Exception("Not implemented yet")
+        # raise Exception("Not implemented yet")
+        for var2 in self.csp.get_neighbor_vars(var1):
+            for val2 in self.domains[var2]:
+                consistent = False
+                if self.csp.unaryFactors[var2] != None:
+                    if self.csp.unaryFactors[var2][val2] != 0:
+                        consistent = True
+                if not consistent:
+                    self.domains[var2].remove(val2)
+                    self.arc_consistency_check(var2)
+                    continue
+                for val1 in self.domains[var1]:
+                    if self.csp.binaryFactors[var1][var2] != None:
+                        if self.csp.binaryFactors[var1][var2][val1][val2] != 0:
+                            consistent = True
+                if not consistent:
+                    self.domains[var2].remove(val2)
+                    self.arc_consistency_check(var2)
         # END_YOUR_CODE
 
 
