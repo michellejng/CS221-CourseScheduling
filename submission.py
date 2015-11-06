@@ -12,7 +12,17 @@ def create_chain_csp(n):
     csp = util.CSP()
     # Problem 0c
     # BEGIN_YOUR_CODE (around 5 lines of code expected)
-    raise Exception("Not implemented yet")
+    # raise Exception("Not implemented yet")
+    def xor(arg1,arg2):
+        if arg1 == arg2:
+            return 1
+        else:
+            return 0
+
+    for i in range(len(variables)):
+        csp.add_variable(variables[i],domain)
+        if i != 0:
+            csp.add_binary_factor(variables[i-1],variables[i],xor)
     # END_YOUR_CODE
     return csp
 
@@ -34,6 +44,7 @@ def create_nqueens_csp(n = 8):
     # Problem 1a
     # BEGIN_YOUR_CODE (around 10 lines of code expected)
     raise Exception("Not implemented yet")
+    
     # END_YOUR_CODE
     return csp
 
