@@ -272,7 +272,17 @@ class BacktrackingSearch():
             # Hint: get_delta_weight gives the change in weights given a partial
             #       assignment, a variable, and a proposed value to this variable
             # BEGIN_YOUR_CODE (around 10 lines of code expected)
-            raise Exception("Not implemented yet")
+            # raise Exception("Not implemented yet")
+            varConstraintList = []
+            for var in self.csp.variables:
+                if var not in assignment:
+                    possibleValues = 0
+                    for val in self.domains[var]:
+                        result = self.get_delta_weight(assignment, var, val)
+                        possibleValues = possibleValues + result
+                    varConstraintList.append((var,possibleValues))
+            varConstraintList.sort(key=lambda x: x[1])
+            return varConstraintList[0][0]
             # END_YOUR_CODE
 
     def arc_consistency_check(self, var):
