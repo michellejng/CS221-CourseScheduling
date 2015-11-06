@@ -307,21 +307,19 @@ class BacktrackingSearch():
 
         # BEGIN_YOUR_CODE (around 20 lines of code expected)
         # raise Exception("Not implemented yet")
+        for val1 in self.domains[var1]:
+            if self.csp.unaryFactors[var1] != None:
+                if self.csp.unaryFactors[var1][val1] == 0:
+                    self.domains[var1].remove(val1)
+                    self.arc_consistency_check(var1)
+        consistent = False
         for var2 in self.csp.get_neighbor_vars(var1):
             for val2 in self.domains[var2]:
-                consistent = False
-                if self.csp.unaryFactors[var2] != None:
-                    if self.csp.unaryFactors[var2][val2] != 0:
-                        consistent = True
-                if not consistent:
-                    self.domains[var2].remove(val2)
-                    self.arc_consistency_check(var2)
-                    continue
                 for val1 in self.domains[var1]:
                     if self.csp.binaryFactors[var1][var2] != None:
                         if self.csp.binaryFactors[var1][var2][val1][val2] != 0:
                             consistent = True
-                if not consistent:
+                if consistent == False:
                     self.domains[var2].remove(val2)
                     self.arc_consistency_check(var2)
         # END_YOUR_CODE
