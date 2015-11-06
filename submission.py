@@ -43,8 +43,41 @@ def create_nqueens_csp(n = 8):
     csp = util.CSP()
     # Problem 1a
     # BEGIN_YOUR_CODE (around 10 lines of code expected)
-    raise Exception("Not implemented yet")
+    # raise Exception("Not implemented yet")
+    def row(x,y):
+        if x[0] != y[0]:
+            return 1
+        else:
+            return 0
+    def col(x,y):
+        if x[1] != y[1]:
+            return 1
+        else:
+            return 0
+    def dia(x,y):
+        if (x[0] - y[0]) != (x[1] - y[1]):
+            return 1
+        else:
+            return 0
+
+    def threeBinary(i,j):
+        csp.add_binary_factor(i,j,row)
+        csp.add_binary_factor(i,j,col)
+        csp.add_binary_factor(i,j,dia)
+
+    domain = []
+    for i in range(n):
+        for j in range(n):
+            domain.append( (i,j) )
     
+    variables = ['x%d'%i for i in range(1, n+1)]
+    for i in variables:
+        csp.add_variable(i,domain)
+
+    for i in variables:
+        for j in variables:
+            if i != j:
+                threeBinary(i,j) 
     # END_YOUR_CODE
     return csp
 
